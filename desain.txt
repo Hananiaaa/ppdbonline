@@ -1,0 +1,98 @@
+desain aplikasi PPDB Online SMPN 1 Bawang menggunakan PHP & MySQL (Database: ppdbonline). Desain ini berfokus pada alur sistem, fitur, dan tampilan (frontend & backend) tanpa menyertakan script PHP maupun SQL.
+
+🎯 Tujuan Aplikasi
+Menyediakan sistem pendaftaran peserta didik baru (PPDB) secara online, dengan fitur:
+    1. Frontend untuk calon siswa mendaftar dan cek hasil.
+    2. Backend (admin panel) untuk panitia sekolah mengelola data pendaftar.
+    3. Pengumuman online berdasarkan nomor pendaftaran.
+    4. Jurnal Pendaftaran berdasarkan ranking nilai.
+
+🗂 Struktur Database (ppdbonline)
+Database ppdbonline dirancang dengan tabel inti:
+    1. calon_siswa
+        ◦ id_siswa (PK)
+        ◦ no_pendaftaran
+        ◦ nama_lengkap
+        ◦ nisn
+        ◦ alamat
+        ◦ asal_sekolah
+        ◦ jalur_pendaftaran (Prestasi Akademik, Prestasi Non Akademik, Afirmasi, Zonasi)
+        ◦ nilai_rapor
+        ◦ prestasi (jika ada)
+        ◦ dokumen_kip (jika jalur afirmasi)
+        ◦ status_pendaftaran (menunggu, diterima, ditolak)
+    2. admin
+        ◦ id_admin (PK)
+        ◦ username
+        ◦ password
+        ◦ role
+    3. pengumuman
+        ◦ id_pengumuman (PK)
+        ◦ no_pendaftaran
+        ◦ status (diterima/ditolak)
+        ◦ keterangan
+    4. jurnal_ranking
+        ◦ id_jurnal (PK)
+        ◦ no_pendaftaran
+        ◦ nama_lengkap
+        ◦ jalur_pendaftaran
+        ◦ nilai_total
+        ◦ peringkat
+
+🖥 Frontend (Halaman untuk Calon Siswa)
+    1. Halaman Beranda
+        ◦ Informasi umum PPDB.
+        ◦ Panduan cara mendaftar.
+        ◦ Timeline pendaftaran, seleksi, dan pengumuman.
+    2. Form Pendaftaran
+        ◦ Input data pribadi: Nama, NISN, alamat, asal sekolah.
+        ◦ Pilih jalur pendaftaran:
+            ▪ Prestasi Akademik → Upload rapor / masukkan nilai.
+            ▪ Prestasi Non Akademik → Upload sertifikat/lomba.
+            ▪ Afirmasi → Upload bukti KIP.
+            ▪ Zonasi → Input alamat sesuai KK.
+        ◦ Upload foto & dokumen pendukung.
+        ◦ Setelah submit → sistem otomatis memberi nomor pendaftaran.
+    3. Halaman Cek Pengumuman
+        ◦ Input: Nomor pendaftaran.
+        ◦ Output:
+            ▪ Jika diterima → tampilkan status "Selamat, Anda diterima di SMPN 1 Wanadadi".
+            ▪ Jika ditolak → tampilkan status "Mohon maaf, Anda belum diterima".
+        ◦ Bisa ditampilkan detail jalur pendaftaran & nilai seleksi.
+
+🔑 Backend (Halaman Admin)
+    1. Dashboard Admin
+        ◦ Statistik jumlah pendaftar per jalur.
+        ◦ Jumlah siswa diterima & ditolak.
+        ◦ Grafik distribusi pendaftar.
+    2. Manajemen Pendaftar
+        ◦ List seluruh pendaftar.
+        ◦ Filter berdasarkan jalur (Akademik, Non Akademik, Afirmasi, Zonasi).
+        ◦ Fitur Verifikasi Dokumen.
+        ◦ Tombol Terima / Tolak per siswa → otomatis update ke tabel pengumuman.
+    3. Jurnal Pendaftaran
+        ◦ Sistem mengurutkan pendaftar berdasarkan ranking nilai rapor / prestasi.
+        ◦ Admin bisa melihat daftar ranking untuk memutuskan penerimaan.
+        ◦ Bisa diekspor ke Excel/PDF untuk laporan sekolah.
+    4. Kelola Admin
+        ◦ Tambah admin baru (misalnya panitia PPDB).
+        ◦ Atur role (Super Admin, Verifikator, Viewer).
+
+📊 Alur Sistem
+    1. Calon siswa daftar → isi form → dapat nomor pendaftaran.
+    2. Data tersimpan → masuk ke list admin.
+    3. Admin verifikasi → pilih diterima/ditolak berdasarkan jalur & ranking.
+    4. Status otomatis masuk tabel pengumuman.
+    5. Siswa cek pengumuman → masukkan nomor pendaftaran → tampil hasil.
+    6. Jurnal ranking tersedia → admin bisa cetak untuk laporan.
+
+🎨 Desain Tampilan (Wireframe Sederhana)
+    • Frontend (Calon Siswa):
+        ◦ Navbar: Beranda | Daftar | Cek Pengumuman | Panduan
+        ◦ Halaman Form: step by step wizard (data pribadi → pilih jalur → upload berkas → submit).
+        ◦ Halaman Pengumuman: kotak input nomor pendaftaran → tombol cari → hasil.
+    • Backend (Admin):
+        ◦ Sidebar: Dashboard | Data Pendaftar | Jurnal Ranking | Pengumuman | Kelola Admin.
+        ◦ Tabel daftar siswa → filter & action tombol.
+        ◦ Dashboard → grafik pie per jalur pendaftaran.
+
